@@ -6,9 +6,6 @@ class LoginRequest{
   Map<String,dynamic>toJson(){
     Map<String,dynamic> map={};
     map["email"]=email;
-
-
-
     map["password"]=password;
     return map;
   }
