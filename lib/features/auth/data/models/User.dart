@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/features/auth/domin/entities/user_entitiy.dart';
+
 class User {
   const User({
       required this.name,
@@ -12,6 +14,7 @@ class User {
   final String email;
   final String role;
 
-
-
+  UserEntity toUserEntity(){
+    return UserEntity(name: name, email: email, role: role);
+  }
 }
