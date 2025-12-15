@@ -1,0 +1,24 @@
+class Category {
+  const Category({
+    required this.id,
+    required this.name,
+    required this.slug,
+    required this.image,
+  });
+
+  factory Category.fromJson(dynamic json) {
+    return Category(id: json['_id'],
+        name: json['name'],
+        slug: json['slug'],
+        image: json['image'],
+        );
+  }
+
+  final String id;
+  final String name;
+  final String slug;
+  final String image;
+
+
+
+}

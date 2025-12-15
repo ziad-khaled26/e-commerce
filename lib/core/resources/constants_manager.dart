@@ -61,6 +61,8 @@ class ApiConstants{
   static const String registerEndPoint="auth/signup";
   static const String loginEndPoint="auth/signin";
   static const String categoriesEndPoint="categories";
+  static const String brandsEndPoint="brands";
+  static const String productsEndPoint="products";
 }
 abstract class CacheConstants{
   static const tokenKey="token Key";
