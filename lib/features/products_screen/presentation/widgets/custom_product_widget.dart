@@ -7,14 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomProductWidget extends StatelessWidget {
-  final double width;
-  final double height;
   final ProductEntity product;
-
   const CustomProductWidget({
     super.key,
-    required this.width,
-    required this.height,
     required this.product
 
   });
@@ -40,10 +35,8 @@ class CustomProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, Routes.productDetails),
+      onTap: () => Navigator.pushNamed(context, Routes.productDetails,arguments: product),
       child: Container(
-        width: width * 0.4,
-        height: height * 0.3,
         decoration: BoxDecoration(
           border: Border.all(
             color: ColorManager.primary.withOpacity(0.3),
@@ -80,80 +73,85 @@ class CustomProductWidget extends StatelessWidget {
                     child: Image.network(
                       product.imageCover,
                       fit: BoxFit.cover,
-                      width: width,
+                      width: double.infinity,
                     ),
                   ),
                   Positioned(
-                      top: height * 0.01,
-                      right: width * 0.02,
+                      top: 2.h,
+                      right:1.w,
                       child: HeartButton(onTap: () {})),
                 ],
               ),
             ),
+            Spacer(),
             Expanded(
-              flex: 5,
+              flex: 6,
               child: Padding(
-                padding: const EdgeInsets.all(4),
+                padding:  REdgeInsets.all(4),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      truncateTitle(product.title),
-                      style: getMediumStyle(
-                        color: ColorManager.textColor,
-                        fontSize: 14.sp,
-                      ),
-                    ),
-                    SizedBox(height: height * 0.002),
-                    Text(
-                      truncateDescription(product.description),
-                      style: getRegularStyle(
-                        color: ColorManager.textColor,
-                        fontSize: 14.sp,
-                      ),
-                    ),
-                    SizedBox(height: height * 0.01),
-                    SizedBox(
-                      width: width * 0.3,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "EGP ${product.price}",
+                            truncateTitle(product.title),
+                            style: getMediumStyle(
+                              color: ColorManager.textColor,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                          SizedBox(height: 0.002.h),
+                          Text(
+                            truncateDescription(product.description),
                             style: getRegularStyle(
                               color: ColorManager.textColor,
                               fontSize: 14.sp,
                             ),
                           ),
-                          Text(
-                            "${product.price} %",
-                            style: getTextWithLine(),
-                          ),
                         ],
                       ),
                     ),
+                    Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                      children: [
+                        Text(
+
+                          "EGP ${product.priceAfterDiscount??product.price}",
+                          style: getRegularStyle(
+                            color: ColorManager.textColor,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                        Text(
+                          "${product.priceAfterDiscount!=null?product.price:""}",
+                          style: getTextWithLine(),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
                     // SizedBox(height: height * 0.005),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          // width: width * 0.22,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Review (${product.ratingsAverage})",
-                                style: getRegularStyle(
-                                  color: ColorManager.textColor,
-                                  fontSize: 12.sp,
-                                ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Review (${product.ratingsAverage})",
+                              style: getRegularStyle(
+                                color: ColorManager.textColor,
+                                fontSize: 12.sp,
                               ),
-                              const Icon(
-                                Icons.star_rate_rounded,
-                                color: ColorManager.starRateColor,
-                              ),
-                            ],
-                          ),
+                            ),
+                            const Icon(
+                              Icons.star_rate_rounded,
+                              color: ColorManager.starRateColor,
+                            ),
+                          ],
                         ),
                         const Spacer(),
                         ClipRRect(
@@ -161,8 +159,6 @@ class CustomProductWidget extends StatelessWidget {
                           child: InkWell(
                             onTap: () {},
                             child: Container(
-                              height: height * 0.036,
-                              width: width * 0.08,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: ColorManager.primary,

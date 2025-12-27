@@ -4,34 +4,34 @@ import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/product_counter.dart';
-import 'package:ecommerce_app/features/cart/widgets/color_and_size_cart_item.dart';
+import 'package:ecommerce_app/features/cart/domin/entities/cart_item_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'color_and_size_cart_item.dart';
 
 class CartItemWidget extends StatelessWidget {
   const CartItemWidget({
     super.key,
-    required this.imagePath,
-    required this.title,
+
     required this.color,
     required this.colorName,
     required this.size,
-    required this.price,
     required this.onDeleteTap,
     required this.quantity,
     required this.onIncrementTap,
     required this.onDecrementTap,
+    required this.cartItem
   });
-  final String imagePath;
-  final String title;
+
   final Color color;
   final String colorName;
   final int size;
-  final int price;
   final void Function() onDeleteTap;
   final int quantity;
-  final void Function(int value) onIncrementTap;
+  final Future<void> Function(int value) onIncrementTap;
   final void Function(int value) onDecrementTap;
+  final CartItemEntity cartItem;
   @override
   Widget build(BuildContext context) {
     bool isPortrait =
@@ -54,8 +54,8 @@ class CartItemWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.r),
               border: Border.all(color: ColorManager.primary.withOpacity(0.3)),
             ),
-            child: Image.asset(
-              imagePath,
+            child: Image.network(
+              cartItem.product.imageCover,
               fit: BoxFit.cover,
               height: isPortrait ? height * 0.142 : height * 0.23,
               width: isPortrait ? width * 0.29 : 165.w,
@@ -79,7 +79,7 @@ class CartItemWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          title,
+                          cartItem.product.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: getBoldStyle(
@@ -113,7 +113,7 @@ class CartItemWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'EGP $price',
+                          'EGP ${cartItem.price}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: getBoldStyle(

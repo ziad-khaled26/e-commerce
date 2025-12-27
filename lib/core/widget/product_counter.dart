@@ -3,16 +3,22 @@ import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductCounter extends StatelessWidget {
-  final int productCounter;
+class ProductCounter extends StatefulWidget {
   final void Function(int) add;
   final void Function(int) remove;
-  const ProductCounter(
+   int productCounter;
+   ProductCounter(
       {super.key,
       required this.add,
       required this.remove,
-      required this.productCounter});
+         required this.productCounter
+      });
 
+  @override
+  State<ProductCounter> createState() => _ProductCounterState();
+}
+
+class _ProductCounterState extends State<ProductCounter> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +31,12 @@ class ProductCounter extends StatelessWidget {
         children: [
           InkWell(
               onTap: () {
-                remove.call(productCounter);
+
+                setState(() {
+                  widget.productCounter--;
+                  widget.remove.call(widget.productCounter);
+                });
+
               },
               child: Icon(
                 Icons.remove_circle_outline,
@@ -36,7 +47,7 @@ class ProductCounter extends StatelessWidget {
             width: 18.w,
           ),
           Text(
-            '$productCounter',
+            '${widget.productCounter}',
             style: getMediumStyle(color: ColorManager.white)
                 .copyWith(fontSize: 18.sp),
           ),
@@ -45,7 +56,11 @@ class ProductCounter extends StatelessWidget {
           ),
           InkWell(
               onTap: () {
-                add.call(productCounter);
+                setState(() {
+                  widget.productCounter++;
+                  widget.add.call(widget.productCounter);
+                });
+
               },
               child: Icon(
                 Icons.add_circle_outline,

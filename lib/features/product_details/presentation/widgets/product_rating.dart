@@ -1,14 +1,18 @@
 import 'package:ecommerce_app/core/resources/assets_manager.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
+import 'package:ecommerce_app/core/resources/ui_utils/ui_utils.dart';
 import 'package:ecommerce_app/core/widget/product_counter.dart';
+import 'package:ecommerce_app/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductRating extends StatelessWidget {
   final String productBuyers;
   final String productRating;
-  const ProductRating({super.key , required this.productBuyers , required this.productRating});
+  final String productId;
+  const ProductRating({super.key , required this.productBuyers , required this.productRating,required this.productId});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +54,6 @@ class ProductRating extends StatelessWidget {
                 .copyWith(fontSize: 14.sp),
           ),
         ),
-        ProductCounter(add: (_) {}, remove: (_) {}, productCounter: 1)
       ],
     );
   }
