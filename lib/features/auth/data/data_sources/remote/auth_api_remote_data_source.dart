@@ -17,6 +17,7 @@ class AuthApiRemoteDataSource implements AuthRemoteDataSource {
     try {
       final response = await dio.post(ApiConstants.registerEndPoint,
           data: registerRequest.toJson());
+
       return RegisterResponse.fromJson(response.data);
     } catch (exception) {
       String message;
